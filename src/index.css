@@ -10,7 +10,6 @@ body{
 .contacts-labels .title {
   font-size: 16px;
   line-height: 112px;
-  background: url("http://91.234.35.26/iwiki-admin/v1.0.0/admin/img/icon-42.png") 0 50% no-repeat;
   padding: 0 0 0 32px;
   color: #333333;
   overflow: hidden;
@@ -267,10 +266,9 @@ input {
 }
 .contacts-list .unit .name .avatar {
   display: inline-block;
-  width: 40px;
-  height: 40px;
-  border-radius: 20px;
-  margin: 0 16px 0 0;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
   vertical-align: top;
 }
 .contacts-list .lab {
