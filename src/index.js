@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
+import { BrowserRouter as Router, Switch, Route, NotFoundRoute } from "react-router-dom";
 
 // inport components
-import SideBar from "./Components/Sidebar/sidebar";
 import Main from "./Components/Main/main";
+import NotFound from "./Components/NotFound/notfound";
 
 import "./index.css";
 
@@ -88,12 +89,16 @@ DeleteContact = (Id) =>
   render() {
     const { List } = this.state;
     return(
-      <div className="container bootstrap snippets bootdeys bootdey">
-        <div className="row decor-default">
-          <SideBar />
-          <Main List = {List} onChangeStatus={this.onChangeStatus} Remove={this.DeleteContact} />
-        </div>
-      </div>
+      <Router>
+        <Switch>
+          <div className="container bootstrap snippets bootdeys bootdey">
+            <div className="row decor-default">          
+              <Route path="/main" exact render={() => (<Main List = {List} onChangeStatus={this.onChangeStatus} Remove={this.DeleteContact} />)} /> 
+            </div>
+          </div>
+        </Switch>
+        <Route path="*" component={NotFound} /> 
+      </Router>
     )
   }
 }

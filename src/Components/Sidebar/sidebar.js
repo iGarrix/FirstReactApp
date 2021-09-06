@@ -1,12 +1,10 @@
 import React from "react";
-import ReactDOM from "react-dom";
 
-const SideBar = () => {
-
+const SideBar = ({List}) => {
     return(
         <div className="col-lg-3 col-md-4 col-sm-12">
           <div className="contacts-labels">
-            <div className="title">All contacts<span>76</span></div>
+            <div className="title">All contacts<span>{List.length}</span></div>
             <div className="list">
               <div className="head">Labels</div>
               <div className="unit">
