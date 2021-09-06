@@ -1,28 +1,37 @@
 
-const StatusBlock = ({Status}) => {
-    if (Status == "Friend") {
-        return (
-          <a className="d-flex justify-content-center text-light rounded text-decorator-none lab-warning">{Status}</a>
-        )
-    }
-    else if (Status == "Work") {
+const StatusBlock = ({Status, onChangeStatus}) => {
+
+  switch (Status) {
+    case "Friend":
       return (
-        <a className="d-flex justify-content-center text-light rounded text-decorator-none lab-success">{Status}</a>
+        <a className="d-flex justify-content-center text-light rounded text-decorator-none lab-warning" onClick={onChangeStatus}>{Status}</a>
       )
-    }
-    else if (Status == "Family") {
+    case "Work":
       return (
-        <a className="d-flex justify-content-center text-light rounded text-decorator-none lab-primary">{Status}</a>
+        <a className="d-flex justify-content-center text-light rounded text-decorator-none lab-success" onClick={onChangeStatus}>{Status}</a>
       )
-    }
-    else {
+    case "Family":
       return (
-        <a className="d-flex justify-content-center text-light rounded text-decorator-none lab-danger">{Status}</a>
+        <a className="d-flex justify-content-center text-light rounded text-decorator-none lab-primary" onClick={onChangeStatus}>{Status}</a>
       )
-    }
+    default:
+      return (
+        <a className="d-flex justify-content-center text-light rounded text-decorator-none lab-danger" onClick={onChangeStatus}>{Status}</a>
+      )
+  }  
 }
 
-const ContactItem = ({Obj}) => {
+const ContactItem = ({Obj, onChangeStatus, Remove}) => {
+
+  let defaultStatus = "d-flex justify-content-center text-light rounded text-decorator-none lab-warning";
+
+    switch (Obj.Status) {
+        case "Work": defaultStatus = "d-flex justify-content-center text-light rounded text-decorator-none lab-success"; break;
+        case "Private": defaultStatus = "d-flex justify-content-center text-light rounded text-decorator-none lab-danger"; break;
+        case "Family": defaultStatus = "d-flex justify-content-center text-light rounded text-decorator-none lab-primary"; break;
+        case "Friend": defaultStatus = "d-flex justify-content-center text-light rounded text-decorator-none lab-warning"; break;
+    }
+
     return(
         <div className="unit">
               <div className="field name">
@@ -36,7 +45,7 @@ const ContactItem = ({Obj}) => {
                   <img src={Obj.Image} alt="image" className="avatar mr-2" /> 
                   <div className="d-flex flex-column w-100">
                     {Obj.Name}
-                    <StatusBlock Status={Obj.Status}/>
+                    <a className={defaultStatus} onClick={onChangeStatus}>{Obj.Status}</a>
                   </div>
                 </div>
               </div>
@@ -45,6 +54,9 @@ const ContactItem = ({Obj}) => {
               </div>
               <div className="field email">
                 {Obj.Email}
+              </div>
+              <div className="field email">
+                <a className="text-danger" onClick={Remove}><i class="fas fa-trash-alt"></i></a>
               </div>
             </div>
     )

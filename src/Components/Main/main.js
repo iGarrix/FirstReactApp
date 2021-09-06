@@ -1,7 +1,7 @@
 import React from "react";
 import ContactList from "./contact-list";
 
-const Main = ({List}) => {
+const Main = ({List, onChangeStatus, Remove}) => {
     return(
         <div className="col-lg-9 col-md-8 col-sm-12">
         <div className="contacts-list">
@@ -11,7 +11,7 @@ const Main = ({List}) => {
             <div className="input-group">
               <input type="text" className="contacts-list-search" placeholder="Search" />
             </div>
-             <ContactList List={List} />      
+             <ContactList List={List} onChangeStatus={onChangeStatus} Remove={Remove} />      
           </form>
         </div>
       </div>
