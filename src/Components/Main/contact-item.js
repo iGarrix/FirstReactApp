@@ -32,6 +32,8 @@ const ContactItem = ({Obj, onChangeStatus, Remove}) => {
         case "Friend": defaultStatus = "d-flex justify-content-center text-light rounded text-decorator-none lab-warning"; break;
     }
 
+    const img = `https://randomuser.me/api/portraits/${Obj.Gender}/${Obj.Image}.jpg`
+
     return(
         <div className="unit">
               <div className="field name">
@@ -42,7 +44,7 @@ const ContactItem = ({Obj, onChangeStatus, Remove}) => {
                 </div>
                 <div className="d-flex align-items-center">
 
-                  <img src={Obj.Image} alt="image" className="avatar mr-2" /> 
+                  <img src={img} alt="image" className="avatar mr-2" /> 
                   <div className="d-flex flex-column w-100">
                     {Obj.Name}
                     <a className={defaultStatus} onClick={onChangeStatus}>{Obj.Status}</a>

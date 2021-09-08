@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Switch, Route, NotFoundRoute } from "react-rou
 // inport components
 import Main from "./Components/Main/main";
 import NotFound from "./Components/NotFound/notfound";
+import AddContact from "./Components/AddContact/AddContact"
 
 import "./index.css";
 
@@ -18,7 +19,8 @@ class App extends Component {
           Phone: "+1-800-600-9898",
           Email: "apostol@gmail.com",
           Status: "Friend",
-          Image: "https://randomuser.me/api/portraits/men/93.jpg"
+          Gender: "men",
+          Image: "93"
         },
         {
           Id: 2,
@@ -26,7 +28,8 @@ class App extends Component {
           Phone: "+1-800-600-9898",
           Email: "apostol@gmail.com",
           Status: "Private",
-          Image: "https://randomuser.me/api/portraits/men/39.jpg"
+          Gender: "women",
+          Image: "39"
         },
         {
           Id: 3,
@@ -34,23 +37,8 @@ class App extends Component {
           Phone: "+1-800-600-9898",
           Email: "dobrinya@gmail.com",
           Status: "Work",
-          Image: "https://randomuser.me/api/portraits/men/63.jpg"
-        },
-        {
-          Id: 4,
-          Name: "Sasha",
-          Phone: "+1-800-600-9898",
-          Email: "shasha@gmail.com",
-          Status: "Family",
-          Image: "https://randomuser.me/api/portraits/men/18.jpg"
-        },
-        {
-          Id: 5,
-          Name: "Ilya Myromec",
-          Phone: "+1-800-600-9898",
-          Email: "myromec@gmail.com",
-          Status: "Friend",
-          Image: "https://randomuser.me/api/portraits/men/45.jpg"
+          Gender: "women",
+          Image: "63"
         }
       ]
   }
@@ -74,30 +62,35 @@ class App extends Component {
     })
 }
 
-DeleteContact = (Id) => 
-{ 
-  const index = this.state.List.findIndex(elem => elem.Id === Id);
-        const partOne = this.state.List.slice(0, index);
-        const partTwo = this.state.List.slice(index + 1);
-        const tmpList = [...partOne, ...partTwo];
+  DeleteContact = (Id) => 
+  { 
+    const index = this.state.List.findIndex(elem => elem.Id === Id);
+          const partOne = this.state.List.slice(0, index);
+          const partTwo = this.state.List.slice(index + 1);
+          const tmpList = [...partOne, ...partTwo];
 
-        this.setState({
-            List: tmpList
-        })
-}
+          this.setState({
+              List: tmpList
+          })
+  }
+
+  CreateContact = (contact) => {
+    let list = this.state.List.slice();
+    list.push(contact);
+    this.setState({
+      List: list
+    })
+  }
 
   render() {
     const { List } = this.state;
     return(
       <Router>
-        <Switch>
-          <div className="container bootstrap snippets bootdeys bootdey">
-            <div className="row decor-default">          
-              <Route path="/main" exact render={() => (<Main List = {List} onChangeStatus={this.onChangeStatus} Remove={this.DeleteContact} />)} /> 
-            </div>
-          </div>
+        <Switch>          
+              <Route path="/" exact render={() => (<Main List = {List} onChangeStatus={this.onChangeStatus} Remove={this.DeleteContact} />)} />  
+              <Route path="/addcontact" exact render={() => (<AddContact CreateContact={this.CreateContact} />)}></Route>        
+              <Route path="*" component={NotFound} /> 
         </Switch>
-        <Route path="*" component={NotFound} /> 
       </Router>
     )
   }
