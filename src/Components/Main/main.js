@@ -3,12 +3,15 @@ import ContactList from "./contact-list";
 import SideBar from "../Sidebar/sidebar";
 import { Link } from "react-router-dom";
 
-const Main = ({List, onChangeStatus, Remove}) => {
+const Main = ({List, onChangeStatus, Remove, onGetCurrentContact}) => {
+
+  const countList = List.length;
+
     return (
       <Fragment>
         <div className="container bootstrap snippets bootdeys bootdey">
           <div className="row decor-default">
-            <SideBar List={List} />
+            <SideBar Count={countList} />
             <div className="col-lg-9 col-md-8 col-sm-12">
               <div className="contacts-list">
                 <Link className="title" to="/addcontact">Add contact</Link>
@@ -27,6 +30,7 @@ const Main = ({List, onChangeStatus, Remove}) => {
                     List={List}
                     onChangeStatus={onChangeStatus}
                     Remove={Remove}
+                    onGetCurrentContact={onGetCurrentContact}
                   />
                 </form>
               </div>

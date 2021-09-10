@@ -1,16 +1,15 @@
 import { Component, Fragment } from "react";
 import { Link, Redirect } from "react-router-dom";
-import { v4 as uuidv4 } from 'uuid';
 
-class AddContact extends Component {
+class EditContact extends Component {
 
     state = {
-        Name: "",
-        Image: `1`,
-        Phone: "",
-        Email: "",
-        Status: "",
-        Gender: "men",
+        Name: this.props.CurrentContact.Name,
+        Image: this.props.CurrentContact.Image,
+        Phone: this.props.CurrentContact.Phone,
+        Email: this.props.CurrentContact.Email,
+        Status: this.props.CurrentContact.Status,
+        Gender: this.props.CurrentContact.Gender,
         isRedirect: false,
     }
 
@@ -65,10 +64,10 @@ class AddContact extends Component {
 
     onSubmit = (e) => {
         e.preventDefault();
-        console.log(this.props);
-        const {Name, Email, Phone, Image, Status, Gender} = this.state;        
+        const {Id} = this.props.CurrentContact;
+        const { Name, Email, Phone, Image, Status, Gender} = this.state;        
         const contact = {
-            Id: uuidv4(),
+            Id,
             Name,
             Email,
             Phone,
@@ -76,17 +75,18 @@ class AddContact extends Component {
             Status,
             Gender,
         }
-
-        const { CreateContact } = this.props;
-        CreateContact(contact);
+        const { ReplaceContact } = this.props;
+        ReplaceContact(contact);
 
         this.setState({
             IsRedirect: true
         })
     }
     
-    render() {       
-        let { Image, Gender, IsRedirect } = this.state;
+    render() {   
+        
+        let {IsRedirect} = this.state;
+        let { Name, Email, Phone, Image, Status, Gender } = this.state;
         if (IsRedirect === true) {
             return <Redirect to="/"></Redirect>
         }
@@ -114,39 +114,39 @@ class AddContact extends Component {
                             <form onSubmit={this.onSubmit}>
                                 <div className="form-group">
                                     <label htmlFor="Name">Name</label>
-                                    <input name="Name" type="text" className="form-control" onChange={this.onGetName} />
+                                    <input name="Name" type="text" className="form-control" defaultValue={Name} onChange={this.onGetName} />
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="Phone">Phone</label>
-                                    <input name="Phone" type="tel" className="form-control" onChange={this.onGetPhone} />
+                                    <input name="Phone" type="tel" className="form-control" defaultValue={Phone} onChange={this.onGetPhone} />
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="email">Email address</label>
-                                    <input type="email" className="form-control" onChange={this.onGetEmail}/>
+                                    <input type="email" className="form-control" defaultValue={Email} onChange={this.onGetEmail}/>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="Avatar">Avatar</label>
-                                    <input type="number" min="1" max="99" className="form-control" onChange={this.onGetImage} />
+                                    <input type="number" min="1" max="99" defaultValue={Image} className="form-control" onChange={this.onGetImage} />
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="Gender">Gender</label>
-                                    <select className="custom-select" onChange={this.onGetGender}>
-                                        <option>Choose...</option>
-                                        <option value="men" selected>Man</option>
+                                    <select className="custom-select" defaultValue={Gender} onChange={this.onGetGender}>
+                                        <option selected>Choose...</option>
+                                        <option value="men">Man</option>
                                         <option value="women">Woman</option>
                                     </select>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="Status">Status</label>
-                                    <select className="custom-select" onChange={this.onGetStatus}>
+                                    <select className="custom-select" defaultValue={Status} onChange={this.onGetStatus}>
                                         <option selected>Choose...</option>
-                                        <option value="Friend">Friend</option>
-                                        <option value="Family">Family</option>
-                                        <option value="Work">Work</option>
-                                        <option value="Private">Private</option>
+                                        <option defaultValue="Friend">Friend</option>
+                                        <option defaultValue="Family">Family</option>
+                                        <option defaultValue="Work">Work</option>
+                                        <option defaultValue="Private">Private</option>
                                     </select>
                                 </div>
-                                <button type="submit" className="btn btn-dark rounded-0 border-0" style={{outline: 0}}>Create contact</button>
+                                <button type="submit" className="btn btn-dark rounded-0 border-0" style={{outline: 0}}>Save contact</button>
                             </form>
                         </div>
                         <div className="col-4">
@@ -159,4 +159,4 @@ class AddContact extends Component {
     }
 }
 
-export default AddContact;
+export default EditContact;

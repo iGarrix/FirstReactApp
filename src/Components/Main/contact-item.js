@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 
 const StatusBlock = ({Status, onChangeStatus}) => {
 
@@ -21,7 +22,7 @@ const StatusBlock = ({Status, onChangeStatus}) => {
   }  
 }
 
-const ContactItem = ({Obj, onChangeStatus, Remove}) => {
+const ContactItem = ({Obj, onChangeStatus, Remove, onGetCurrentContact}) => {
 
   let defaultStatus = "d-flex justify-content-center text-light rounded text-decorator-none lab-warning";
 
@@ -58,7 +59,10 @@ const ContactItem = ({Obj, onChangeStatus, Remove}) => {
                 {Obj.Email}
               </div>
               <div className="field email">
-                <a className="text-danger" onClick={Remove}><i class="fas fa-trash-alt"></i></a>
+                <a className="text-danger" onClick={Remove}><i className="fas fa-trash-alt"></i></a>
+                <Link to="/editcontact">
+                  <a className="text-success ml-3" onClick={onGetCurrentContact}><i className="fas fa-edit"></i></a>      
+                </Link>     
               </div>
             </div>
     )
