@@ -83,7 +83,7 @@ class EditContact extends Component {
         })
     }
     
-    render() {   
+    render() { 
         
         let {IsRedirect} = this.state;
         let { Name, Email, Phone, Image, Status, Gender } = this.state;

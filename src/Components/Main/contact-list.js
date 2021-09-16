@@ -1,13 +1,15 @@
 import ContactItem from "./contact-item";
 
-const ContactList = ({List, onChangeStatus, Remove, onGetCurrentContact}) => {
+const ContactList = ({List, onChangeStatus, Remove, onGetCurrentContact, SearchValue}) => {
     const item = List.map(item => 
     {
-        return (
-            <ContactItem key={item.Id} Obj={item} onChangeStatus={() => onChangeStatus(item.Id)}
-            Remove={() => Remove(item.Id)}
-            onGetCurrentContact={() => onGetCurrentContact(item.Id)} />
-        )
+        if (item.Name.toLowerCase().indexOf(SearchValue.toLowerCase()) > -1) {          
+            return (
+                <ContactItem key={item.Id} Obj={item} onChangeStatus={() => onChangeStatus(item.Id)}
+                Remove={() => Remove(item.Id)}
+                onGetCurrentContact={() => onGetCurrentContact(item.Id)} />
+            )
+        }
     });
     return (
         <section>

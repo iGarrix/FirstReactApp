@@ -108,10 +108,20 @@ class App extends Component {
 
   render() {
     const { List, CurrentContact } = this.state;
+    let work = 0;
+    let friend = 0;
+    let privatec = 0;
+    let family = 0;
+
+    List.forEach(i => {if(i.Status === "Work") { ++work; }});
+    List.forEach(i => {if(i.Status === "Friend") { ++friend; }});
+    List.forEach(i => {if(i.Status === "Private") { ++privatec; }});
+    List.forEach(i => {if(i.Status === "Family") { ++family; }});
+
     return(
       <Router>
         <Switch>          
-              <Route path="/" exact render={() => (<Main List = {List} onGetCurrentContact={this.onGetCurrentContact} onChangeStatus={this.onChangeStatus} Remove={this.DeleteContact} />)} />  
+              <Route path="/" exact render={() => (<Main List = {List} WorkCount={work} FamilyCount={family} PrivateCount={privatec} FriendsCount={friend} onGetCurrentContact={this.onGetCurrentContact} onChangeStatus={this.onChangeStatus} Remove={this.DeleteContact} />)} />  
               <Route path="/addcontact" exact render={() => (<AddContact CreateContact={this.CreateContact} />)}></Route>     
               <Route path="/editcontact" exact render={() => (<EditContact ReplaceContact={this.ReplaceContact} CurrentContact={CurrentContact} />)}></Route>            
               <Route path="*" component={NotFound} /> 
