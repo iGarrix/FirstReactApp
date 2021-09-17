@@ -3,8 +3,6 @@ import ContactList from "./contact-list";
 import SideBar from "../Sidebar/sidebar";
 import { Link } from "react-router-dom";
 import { Component } from "react";
-
-
 class Main extends Component {
   
   
@@ -18,7 +16,6 @@ class Main extends Component {
       Search: search
     })
   }
-
 
   render() {
     let {List, onChangeStatus, Remove, onGetCurrentContact, WorkCount, PrivateCount, FamilyCount, FriendsCount} = this.props;

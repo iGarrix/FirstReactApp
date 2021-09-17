@@ -11,39 +11,18 @@ import EditContact from "./Components/EditContact/EditContact"
 
 import "./index.css";
 
+import ApiDb from "./Services/ApiService";
 class App extends Component {
 
   state = {
-      List: [
-        {
-          Id: uuidv4(),
-          Name: "Apostol Petro",
-          Phone: "+1-800-600-9898",
-          Email: "apostol@gmail.com",
-          Status: "Friend",
-          Gender: "men",
-          Image: "93"
-        },
-        {
-          Id: uuidv4(),
-          Name: "Alexa Popovish",
-          Phone: "+1-800-600-9898",
-          Email: "apostol@gmail.com",
-          Status: "Private",
-          Gender: "women",
-          Image: "39"
-        },
-        {
-          Id: uuidv4(),
-          Name: "Dobrinya",
-          Phone: "+1-800-600-9898",
-          Email: "dobrinya@gmail.com",
-          Status: "Work",
-          Gender: "women",
-          Image: "63"
-        }
-      ],
+      List: [],
       CurrentContact: "",
+  }
+
+  componentDidMount() {
+    new ApiDb().fetchList().then(ListData => {
+      this.setState({ List: ListData.List })
+    })
   }
 
   onChangeStatus = (Id) => {
@@ -63,6 +42,8 @@ class App extends Component {
     this.setState({
         ContactList: tmpList
     })
+
+    new ApiDb().updateDatabse(tmpList);
 }
 
   DeleteContact = (Id) => 
@@ -75,6 +56,8 @@ class App extends Component {
           this.setState({
               List: tmpList
           })
+
+          new ApiDb().updateDatabse(tmpList);
   }
 
   CreateContact = (contact) => {
@@ -83,6 +66,8 @@ class App extends Component {
     this.setState({
       List: list
     })
+
+    new ApiDb().updateDatabse(list);
   }
 
   ReplaceContact = (editedContact) => {
@@ -94,6 +79,8 @@ class App extends Component {
     this.setState({
       List: list
     })
+
+    new ApiDb().updateDatabse(list);
 
   }
 
