@@ -1,63 +1,46 @@
 import React, { Fragment } from "react";
-import ContactList from "./contact-list";
-import SideBar from "../Sidebar/sidebar";
 import { Link } from "react-router-dom";
-import { Component } from "react";
-class Main extends Component {
-  
-  
-  state = {
-    Search: ""
-  }
 
-  onGetSearch = (e) => {
-    const search = e.target.value;
-    this.setState({
-      Search: search
-    })
-  }
+// Import components
+import ContactList from "./ContactList/ContactList";
+import SideBar from "../Sidebar/SideBar";
 
-  render() {
-    let {List, onChangeStatus, Remove, onGetCurrentContact, WorkCount, PrivateCount, FamilyCount, FriendsCount} = this.props;
-    const countList = List.length;
-
-    let {Search} = this.state;
+const Main = () => {
 
     return (
-      <Fragment>
-        <div className="container bootstrap snippets bootdeys bootdey">
-          <div className="row decor-default">
-            <SideBar Count={countList} WorkCount={WorkCount} PrivateCount={PrivateCount} FamilyCount={FamilyCount} FriendsCount={FriendsCount} />
-            <div className="col-lg-9 col-md-8 col-sm-12">
-              <div className="contacts-list">
-                <Link className="title" to="/addcontact">Add contact</Link>
-                <form
-                  className="ac-custom ac-checkbox ac-checkmark"
-                  autoComplete="off"
-                >
-                  <div className="input-group">
-                    <input
-                      type="text"
-                      className="contacts-list-search"
-                      placeholder="Search"
-                      onKeyUp={this.onGetSearch}
-                    />
-                  </div>
-                  <ContactList
-                    List={List}
-                    SearchValue={Search}
-                    onChangeStatus={onChangeStatus}
-                    Remove={Remove}
-                    onGetCurrentContact={onGetCurrentContact}
-                  />
-                </form>
+        <Fragment>
+            <div className="container bootstrap snippets bootdeys bootdey">
+                <div className="row decor-default">
+                    <SideBar />
+                    <div className="col-lg-9 col-md-8 col-sm-12">
+                        <div className="contacts-list">
+                            <Link className="title" to="/add-new-contact">Add new contact</Link>
+
+                            <form className="ac-custom ac-checkbox ac-checkmark" autoComplete="off">
+                                <div className="input-group">
+                                    <input type="text" className="contacts-list-search" placeholder="Search" />
+                                </div>
+                                <div className="unit head">
+                                    <div className="field name">
+                                        <div className="check">
+                                            <input id="cb1" name="cb1" type="checkbox" />
+                                            <label htmlFor="cb1"></label>
+                                            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"></svg></div>
+                Name
               </div>
+                                    <div className="field phone">
+                                        Phone
+              </div>
+
+                                </div>
+                                <ContactList />
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </Fragment>
-    );
-  }
+        </Fragment>
+    )
 }
 
 export default Main;

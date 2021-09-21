@@ -1,27 +1,22 @@
+class ContactListService {
+    URL = "https://react-09-default-rtdb.firebaseio.com/contacts.json";
 
 
-class ApiDb {
-
-    URL = "https://react-68461-default-rtdb.firebaseio.com/list.json";
-
-    async fetchList () {
+    async fetchContactList() {
         const List = await fetch(this.URL)
-        .then(resp => 
-          {
-              return resp.json();
-          }).then(data => 
-            {
-                if(data == null) {
-                  return  {
-                    List: []
-                  }
+            .then(responce => {
+                return responce.json();
+            }).then(data => {
+                if (data == null) {
+                    return {
+                        List: []
+                    }
+
+                } else {
+                    return {
+                        List: data
+                    }
                 }
-                else {
-                  return {
-                    List: data
-                  }
-                }
-  
             })
             .catch(err => console.log(err))
         return List;
@@ -38,7 +33,8 @@ class ApiDb {
             })
             .then(res => console.log(res))
             .catch(res => console.log(res))
-      }
+    }
 }
 
-export default ApiDb;
+const apiService = new ContactListService();
+export default apiService;

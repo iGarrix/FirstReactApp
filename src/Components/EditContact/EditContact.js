@@ -1,16 +1,18 @@
 import { Component, Fragment } from "react";
 import { Link, Redirect } from "react-router-dom";
+import { v4 as uuidv4 } from 'uuid';
 
 class EditContact extends Component {
 
     state = {
+        Id: this.props.CurrentContact.Id,
         Name: this.props.CurrentContact.Name,
-        Image: this.props.CurrentContact.Image,
         Phone: this.props.CurrentContact.Phone,
         Email: this.props.CurrentContact.Email,
-        Status: this.props.CurrentContact.Status,
         Gender: this.props.CurrentContact.Gender,
-        isRedirect: false,
+        Status: this.props.CurrentContact.Status,
+        Image: this.props.CurrentContact.Image,
+        isRedirect: false
     }
 
     onGetName = (e) => {
@@ -19,82 +21,83 @@ class EditContact extends Component {
             Name: name
         })
     }
-
     onGetPhone = (e) => {
         const phone = e.target.value;
         this.setState({
             Phone: phone
         })
     }
-
     onGetEmail = (e) => {
         const email = e.target.value;
         this.setState({
             Email: email
         })
     }
-
+    onGetStatus = (e) => {
+        const status = e.target.value;
+        this.setState({
+            Status: status
+        })
+    }
     onGetGender = (e) => {
         const gender = e.target.value;
         this.setState({
             Gender: gender
         })
     }
-
-    onGetStatus = (e) => {
-        const status = e.target.value;
-        this.setState({
-            Status: status
-        })
-    }
-
-    onGetStatus = (e) => {
-        const status = e.target.value;
-        this.setState({
-            Status: status
-        })
-    }
-
     onGetImage = (e) => {
         const image = e.target.value;
         this.setState({
             Image: image
         })
     }
-
-    onSubmit = (e) => {
-        e.preventDefault();
-        const {Id} = this.props.CurrentContact;
-        const { Name, Email, Phone, Image, Status, Gender} = this.state;        
-        const contact = {
-            Id,
-            Name,
-            Email,
-            Phone,
-            Image,
-            Status,
-            Gender,
-        }
-        const { ReplaceContact } = this.props;
-        ReplaceContact(contact);
+    onGetAvatar = (e) => {
+        const avatar = e.target.value;
 
         this.setState({
-            IsRedirect: true
+            Image: avatar,
         })
     }
-    
-    render() { 
-        
-        let {IsRedirect} = this.state;
-        let { Name, Email, Phone, Image, Status, Gender } = this.state;
-        if (IsRedirect === true) {
-            return <Redirect to="/"></Redirect>
+
+    EditContact = (e) => {
+        e.preventDefault();
+        const { onEditContact } = this.props;
+        const { Id, Name, Phone, Email, Status, Image, Gender, isRedirect } = this.state;
+        const NewContact = {
+            Id,
+            Name,
+            Phone,
+            Email,
+            Gender,
+            Status,
+            Image,
         }
-        const img = `https://randomuser.me/api/portraits/${Gender}/${Image}.jpg`
+
+        onEditContact(NewContact);
+        this.setState({
+            isRedirect: true
+        })
+    }
+
+    render() {
+
+        let { Name, Phone, Status, Email } = this.props.CurrentContact;
+
+        let { isRedirect, Image, Gender } = this.state;
+        let Avatar = Image;
+        if (isRedirect === true) {
+            return <Redirect to="/" />
+        }
+        if (Image === "" || Image === null) {
+            Image = `https://upload.wikimedia.org/wikipedia/commons/5/50/User_icon-cp.svg`;
+        } else {
+            Image = `https://api.randomuser.me/portraits/${Gender}/${Image}.jpg`;
+        }
         return (
             <Fragment>
                 <div className="container">
-                    <nav className="navbar navbar-expand-lg navbar-light bg-light rounded">
+                    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                        <Link className="navbar-brand" to="/">Contact list</Link>
                         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"></span>
                         </button>
@@ -108,54 +111,60 @@ class EditContact extends Component {
                         </div>
                     </nav>
                 </div>
-                <div className="container mt-3">
+                <div className="container">
                     <div className="row">
+                        <div className="col">
+                            <h2>Edit contact</h2>
+                        </div>
+                    </div>
+                    <div className="row">
+
                         <div className="col-8">
-                            <form onSubmit={this.onSubmit}>
+                            <form onSubmit={this.EditContact}>
                                 <div className="form-group">
                                     <label htmlFor="Name">Name</label>
-                                    <input name="Name" type="text" className="form-control" defaultValue={Name} onChange={this.onGetName} />
+                                    <input name="Name" type="text" defaultValue={Name} className="form-control" onChange={this.onGetName} />
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="Phone">Phone</label>
-                                    <input name="Phone" type="tel" className="form-control" defaultValue={Phone} onChange={this.onGetPhone} />
+                                    <input name="Phone" type="tel" defaultValue={Phone} className="form-control" onChange={this.onGetPhone} />
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="email">Email address</label>
-                                    <input type="email" className="form-control" defaultValue={Email} onChange={this.onGetEmail}/>
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="Avatar">Avatar</label>
-                                    <input type="number" min="1" max="99" defaultValue={Image} className="form-control" onChange={this.onGetImage} />
+                                    <input type="email" className="form-control" defaultValue={Email} onChange={this.onGetEmail} />
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="Gender">Gender</label>
-                                    <select className="custom-select" defaultValue={Gender} onChange={this.onGetGender}>
-                                        <option selected>Choose...</option>
-                                        <option value="men">Man</option>
-                                        <option value="women">Woman</option>
+                                    <select className="custom-select" onChange={this.onGetGender}>
+                                        <option defaultValue>{Gender}</option>
+                                        <option value="women">Women</option>
+                                        <option value="men">Men</option>
                                     </select>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="Status">Status</label>
-                                    <select className="custom-select" defaultValue={Status} onChange={this.onGetStatus}>
-                                        <option selected>Choose...</option>
-                                        <option defaultValue="Friend">Friend</option>
-                                        <option defaultValue="Family">Family</option>
-                                        <option defaultValue="Work">Work</option>
-                                        <option defaultValue="Private">Private</option>
+                                    <select className="custom-select" onChange={this.onGetStatus}>
+                                        <option defaultValue>{Status}</option>
+                                        <option value="Work">Work</option>
+                                        <option value="Family">Family</option>
+                                        <option value="Private">Private</option>
+                                        <option value="Friend">Friend</option>
                                     </select>
                                 </div>
-                                <button type="submit" className="btn btn-dark rounded-0 border-0" style={{outline: 0}}>Save contact</button>
+                                <div className="form-group">
+                                    <label htmlFor="Avatar">Avatar</label>
+                                    <input type="number" min="0" max="99" defaultValue={Avatar} className="form-control" onChange={this.onGetAvatar} />
+                                </div>
+                                <button type="submit" className="btn btn-primary">Save</button>
                             </form>
                         </div>
                         <div className="col-4">
-                            <img src={img} width="400" height="250" className="rounded float-left" alt="..." />
+                            <img src={Image} className="rounded avatar float-left" alt="..." />
                         </div>
                     </div>
                 </div>
             </Fragment>
-        )
+        );
     }
 }
 

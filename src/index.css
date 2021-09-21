@@ -1,6 +1,7 @@
 @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
-@import url("https://pro.fontawesome.com/releases/v5.10.0/css/all.css");
+@import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css";
 body{
+ 
   margin-top:20px;
   background:#eee;
 }
@@ -204,7 +205,7 @@ input {
 }
 .contacts-list .unit .name {
   width: 40%;
-  padding: 0 0 0 80px;
+  padding: 0 0 0 44px;
   position: relative;
 }
 .contacts-list .unit .name .check {
@@ -251,13 +252,10 @@ input {
   line-height: 46px;
 }
 .contacts-list .icons .icon-folder {
-  background: url("http://91.234.35.26/iwiki-admin/v1.0.0/admin/img/icon-9.png") no-repeat 50% 50%;
 }
 .contacts-list .icons .icon-label {
-  background: url("http://91.234.35.26/iwiki-admin/v1.0.0/admin/img/icon-5.png") no-repeat 50% 50%;
 }
 .contacts-list .icons .icon-trash {
-  background: url("http://91.234.35.26/iwiki-admin/v1.0.0/admin/img/icon-10.png") no-repeat 50% 50%;
 }
 .contacts-list .icons .icon {
   display: inline-block;
@@ -270,6 +268,7 @@ input {
   width: 64px;
   height: 64px;
   border-radius: 50%;
+  margin: 0 16px 0 0;
   vertical-align: top;
 }
 .contacts-list .lab {
@@ -279,7 +278,8 @@ input {
   min-width: 75px;
   padding: 0 0 0 18px;
   color: #ffffff;
-  margin-left: 60px;
+  margin-left: 84px;
+  cursor: pointer;
 }
 .contacts-list .lab-warning {
   background: #f2a654;
@@ -292,4 +292,35 @@ input {
 }
 .contacts-list .lab-primary {
   background: #7266ba;
+}
+
+.icons{
+  float: right;
+  padding-right: 80px;
+}
+.icons i {
+  cursor: pointer;
+}
+
+.icons i:first-child{
+  color: #f2a654;
+}
+
+.icons i:last-child{
+  margin-left: 10px;
+  color: #ff69b4;
+}
+.emptyList{
+  font-size: 28px;
+  text-align: center;
+  font-weight: bold;
+}
+.emptyList{
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+}
+.avatar{
+  width: 250px;
+  height: 250px;
 }
