@@ -1,17 +1,21 @@
 import { Component, Fragment } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
+import { connect } from "react-redux";
+
+import {ListEditContact} from "../../Actions/ContactListActions"
+import apiService from "../../Services/APIService";
 
 class EditContact extends Component {
 
     state = {
-        Id: this.props.CurrentContact.Id,
-        Name: this.props.CurrentContact.Name,
-        Phone: this.props.CurrentContact.Phone,
-        Email: this.props.CurrentContact.Email,
-        Gender: this.props.CurrentContact.Gender,
-        Status: this.props.CurrentContact.Status,
-        Image: this.props.CurrentContact.Image,
+        Id: this.props.EditContact.Id,
+        Name: this.props.EditContact.Name,
+        Phone: this.props.EditContact.Phone,
+        Email: this.props.EditContact.Email,
+        Gender: this.props.EditContact.Gender,
+        Status: this.props.EditContact.Status,
+        Image: this.props.EditContact.Image,
         isRedirect: false
     }
 
@@ -61,8 +65,8 @@ class EditContact extends Component {
 
     EditContact = (e) => {
         e.preventDefault();
-        const { onEditContact } = this.props;
-        const { Id, Name, Phone, Email, Status, Image, Gender, isRedirect } = this.state;
+        const { ContactList, EditContact, ListEditContact } = this.props;
+        const { Id, Name, Phone, Email, Status, Image, Gender } = this.state;
         const NewContact = {
             Id,
             Name,
@@ -73,7 +77,16 @@ class EditContact extends Component {
             Image,
         }
 
-        onEditContact(NewContact);
+        let list = ContactList.slice();
+        const index = list.findIndex(elem => elem.Id === EditContact.Id);
+    
+        list[index] = NewContact;
+    
+
+        ListEditContact(list);
+    
+        apiService.updateDatabse(list);
+
         this.setState({
             isRedirect: true
         })
@@ -81,9 +94,11 @@ class EditContact extends Component {
 
     render() {
 
-        let { Name, Phone, Status, Email } = this.props.CurrentContact;
+        //let { Name, Phone, Status, Email } = this.props.EditContact;
 
-        let { isRedirect, Image, Gender } = this.state;
+        //let { isRedirect, Image, Gender } = this.state;
+
+        let { Id, Name, Phone, Status, Email, Gender, Image, isRedirect } = this.state;
         let Avatar = Image;
         if (isRedirect === true) {
             return <Redirect to="/" />
@@ -168,4 +183,15 @@ class EditContact extends Component {
     }
 }
 
-export default EditContact;
+const mapStateToProps = ({ ContactListReducer }) => {
+    const { EditContact, ContactList } = ContactListReducer;
+    return { ContactList, EditContact };
+}
+
+const mapDispatchToProps = {
+    ListEditContact
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditContact);
+
+//export default EditContact;

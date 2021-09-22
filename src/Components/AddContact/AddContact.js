@@ -84,9 +84,9 @@ class AddContact extends Component {
         const { ContactList } = this.props;
         let list = ContactList.slice();
         list.push(NewContact);
-        apiService.updateDatabse(list);
 
         AddNewContact(list)
+        apiService.updateDatabse(list);
         
         this.setState({
             isRedirect: true
