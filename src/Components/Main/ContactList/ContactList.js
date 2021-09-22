@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { connect } from "react-redux";
 
 // Import components
-import Contactitem from "./ContactItem/ContactItem";
+import Contactitem from "./ContactItem/ContactItem"
 // Import actions
 import { getContactList } from "../../../Actions/ContactListActions";
 // Import api service

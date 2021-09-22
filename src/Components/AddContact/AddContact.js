@@ -1,6 +1,11 @@
 import { Component, Fragment } from "react";
-import { Link, Redirect } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
+import { Link, Redirect } from "react-router-dom";
+
+import { AddNewContact } from "../../Actions/ContactListActions";
+import { connect } from "react-redux";
+
+import apiService from "../../Services/APIService";
 
 class AddContact extends Component {
 
@@ -11,8 +16,14 @@ class AddContact extends Component {
         Gender: "",
         Status: "",
         Image: null,
-        isRedirect: false
+        isRedirect: false,
     }
+
+    // componentDidMount = () => {
+    //     apiService.fetchContactList().then(data => {
+    //         getContactList(data.List);
+    //     })
+    // }
 
     onGetName = (e) => {
         const name = e.target.value;
@@ -59,8 +70,8 @@ class AddContact extends Component {
 
     CreateContact = (e) => {
         e.preventDefault();
-        const { onAddNewContact } = this.props;
-        const { Name, Phone, Email, Status, Image, Gender, isRedirect } = this.state;
+        const { AddNewContact } = this.props;
+        const { Name, Phone, Email, Status, Image, Gender} = this.state;
         const NewContact = {
             Id: uuidv4(),
             Name,
@@ -70,8 +81,13 @@ class AddContact extends Component {
             Status,
             Image,
         }
+        const { ContactList } = this.props;
+        let list = ContactList.slice();
+        list.push(NewContact);
+        apiService.updateDatabse(list);
 
-        onAddNewContact(NewContact);
+        AddNewContact(list)
+        
         this.setState({
             isRedirect: true
         })
@@ -163,4 +179,13 @@ class AddContact extends Component {
     }
 }
 
-export default AddContact;
+const mapStateToProps = ({ ContactListReducer }) => {
+    const { ContactList, ContactItem } = ContactListReducer;
+    return { ContactList, ContactItem };
+}
+
+const mapDispatchToProps = {
+    AddNewContact
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddContact);

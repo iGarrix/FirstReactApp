@@ -1,5 +1,5 @@
 class ContactListService {
-    URL = "https://react-09-default-rtdb.firebaseio.com/contacts.json";
+    URL = "https://react-68461-default-rtdb.firebaseio.com/list.json";
 
 
     async fetchContactList() {
